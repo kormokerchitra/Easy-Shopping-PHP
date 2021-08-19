@@ -2,9 +2,9 @@
 
 $con=mysqli_connect('localhost','root','','easy_shopping');
 
-$id=$_POST['id'];
+$user_id=$_POST['user_id'];
 
-mysqli_query($con, "delete from user_list where id = '$id'");
+mysqli_query($con, "delete from user_list where user_id = '$user_id'");
 
 mysqli_close($con);
 

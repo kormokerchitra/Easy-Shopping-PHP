@@ -18,9 +18,9 @@
  
  //Pushing name and id in the blank array created 
  array_push($result,array(
- "id"=>$row['id'],
+ "order_id"=>$row['order_id'],
  "inv_id"=>$row['inv_id'],
- "order_by"=>$row['order_by'],
+ "full_name"=>$row['full_name'],
   "total_product"=>$row['total_product'],
    "total_price"=>$row['total_price'],
    "discount"=>$row['discount'],

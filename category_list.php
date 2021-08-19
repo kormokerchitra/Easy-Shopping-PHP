@@ -18,7 +18,7 @@
  
  //Pushing name and id in the blank array created 
  array_push($result,array(
- "id"=>$row['id'],
+ "cat_id"=>$row['cat_id'],
  "cat_name"=>$row['cat_name'],
  "product_count"=>$row['product_count'],
  ));

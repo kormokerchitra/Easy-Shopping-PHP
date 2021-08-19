@@ -8,7 +8,7 @@
  	// 	echo "not ok";
  	// }
 
- 	$sql = "SELECT * FROM user_list";
+ 	$sql = "SELECT * FROM reviews";
 
  	$stored_res = mysqli_query($con,$sql);
 
@@ -18,16 +18,18 @@
  
  //Pushing name and id in the blank array created 
  array_push($result,array(
- "user_id"=>$row['user_id'],
- "full_name"=>$row['full_name'],
- "username"=>$row['username'],
- "address"=>$row['address'],
- "email"=>$row['email'],
- "phone_num"=>$row['phone_num'],
+ "rev_id"=>$row['rev_id'],
+ "cat_name"=>$row['cat_name'],
+ "prod_id"=>$row['prod_id'],
+ "product_name"=>$row['product_name'],
+  "full_name"=>$row['full_name'],
+ "rating"=>$row['rating'],
+ "reviews"=>$row['reviews'],
+  "date"=>$row['date'],
  ));
  }
 
- echo json_encode(array('user_list'=>$result));
+ echo json_encode(array('list'=>$result));
  
  mysqli_close($con);
 

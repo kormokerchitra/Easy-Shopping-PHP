@@ -18,7 +18,7 @@
  
  //Pushing name and id in the blank array created 
  array_push($result,array(
- "id"=>$row['id'],
+ "vou_id"=>$row['vou_id'],
  "voucher_name"=>$row['voucher_name'],
  "voucher_amount"=>$row['voucher_amount'],
   "vou_exp_date"=>$row['vou_exp_date'],
