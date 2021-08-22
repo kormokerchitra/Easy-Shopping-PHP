@@ -23,7 +23,7 @@
  "full_name"=>$row['full_name'],
   "total_product"=>$row['total_product'],
    "total_price"=>$row['total_price'],
-   "discount"=>$row['discount'],
+   "prod_discount"=>$row['prod_discount'],
    "sub_total"=>$row['sub_total'],
    "coupon_discount"=>$row['coupon_discount'],
    "shipping_cost"=>$row['shipping_cost'],
