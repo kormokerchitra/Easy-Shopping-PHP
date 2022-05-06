@@ -3,7 +3,7 @@
 $con=mysqli_connect('localhost','root','','easy_shopping');
  //mysqli_set_charset($con, "utf8");
 
-$full_name = $_POST["full_name"];
+$user_id = $_POST["user_id"];
 $total_product = $_POST["total_product"];
 $total_price = $_POST["total_price"];
 $prod_discount = $_POST["prod_discount"];
@@ -18,7 +18,7 @@ $delivery_date = $_POST["delivery_date"];
 
 $inv_id = rand(10,1000);
 
-$result = mysqli_query($con,"insert into order_details(order_id, inv_id, full_name, total_product, total_price, prod_discount, sub_total, coupon_discount, shipping_cost, total_payable, payment_method, address, phon_number, delivery_date, status) values(null,'{$inv_id}', '{$full_name}', '{$total_product}', '{$total_price}', '{$prod_discount}', '{$sub_total}', '{$coupon_discount}', '{$shipping_cost}', '{$total_payable}', '{$payment_method}', '{$address}', '{$phon_number}', '{$delivery_date}', 'New')");
+$result = mysqli_query($con,"insert into order_details(order_id, inv_id, user_id, total_product, total_price, prod_discount, sub_total, coupon_discount, shipping_cost, total_payable, payment_method, address, phon_number, delivery_date, status) values(null,'{$inv_id}', '{$user_id}', '{$total_product}', '{$total_price}', '{$prod_discount}', '{$sub_total}', '{$coupon_discount}', '{$shipping_cost}', '{$total_payable}', '{$payment_method}', '{$address}', '{$phon_number}', '{$delivery_date}', 'New')");
  
  //if we got some result 
  if(isset($result)){

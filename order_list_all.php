@@ -3,14 +3,7 @@
 	$con = mysqli_connect('localhost','root','','easy_shopping');
    $user_name;
 
-   $user_id = $_POST["user_id"];
- 	// if($con){
- 	// 	echo "ok";
- 	// }else{
- 	// 	echo "not ok";
- 	// }
-
- 	$sql = "SELECT * FROM order_details WHERE user_id = '$user_id' ORDER BY order_id DESC";
+ 	$sql = "SELECT * FROM order_details ORDER BY order_id DESC";
 
  	$stored_res = mysqli_query($con,$sql);
 

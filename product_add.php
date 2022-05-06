@@ -1,11 +1,17 @@
 <?php
 
+$file_url = ""; $status = "";
+//this is our upload folder
+$upload_path = 'product_uploads/';
+ 
+//creating the upload url
+$upload_url = 'easy_shopping/'.$upload_path;
+
 $con=mysqli_connect('localhost','root','','easy_shopping');
  //mysqli_set_charset($con, "utf8");
 
 $product_name = $_POST["product_name"];
 $cat_id = $_POST["cat_id"];
-$cat_name = $_POST["cat_name"];
 $product_img = $_POST["product_img"];
 $product_code = $_POST["product_code"];
 $product_price = $_POST["product_price"];
@@ -17,8 +23,27 @@ $product_size = $_POST["product_size"];
 $shipping_weight = $_POST["shipping_weight"];
 $manuf_name = $_POST["manuf_name"];
 $prod_serial_num = $_POST["prod_serial_num"];
+$stock = $_POST["stock"];
 
-$result = mysqli_query($con,"insert into product_list(prod_id, product_name, cat_id, cat_name, product_img, product_code, product_price, prod_rating, prod_discount, prod_disc_date, prod_description, prod_dimension, product_size, shipping_weight, manuf_name, prod_serial_num) values(null,'{$product_name}', '{$cat_id}', '{$cat_name}', '{$product_img}', '{$product_code}', '{$product_price}', '0', '{$prod_discount}', '{$prod_disc_date}', '{$prod_description}', '{$prod_dimension}', '{$product_size}', '{$shipping_weight}', '{$manuf_name}', '{$prod_serial_num}')");
+$date = time();
+if($product_img!=""){
+	//file url to store in the database
+    $file_url = $upload_url . $date . '.png';
+
+    //file path to upload in the server
+    $file_path = $upload_path . $date . '.png';
+
+    try{
+	//saving the file
+	$status = file_put_contents($file_path,base64_decode($product_img));
+    // move_uploaded_file($_FILES['image']['tmp_name'],$file_path);
+	}catch(Exception $e){
+	    $response['error']=true;
+	    $response['message']=$e->getMessage();
+	}
+}
+
+$result = mysqli_query($con,"insert into product_list(prod_id, product_name, cat_id, product_img, product_code, product_price, prod_rating, prod_discount, prod_disc_date, prod_description, prod_dimension, product_size, shipping_weight, manuf_name, prod_serial_num, stock) values(null,'{$product_name}', '{$cat_id}', '{$file_url}', '{$product_code}', '{$product_price}', '0', '{$prod_discount}', '{$prod_disc_date}', '{$prod_description}', '{$prod_dimension}', '{$product_size}', '{$shipping_weight}', '{$manuf_name}', '{$prod_serial_num}', '{$stock}')");
  
  //if we got some result 
  if(isset($result)){

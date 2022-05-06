@@ -19,7 +19,7 @@ $con=mysqli_connect('localhost','root','','easy_shopping');
  //if we got some result 
  if(isset($check)){
  //displaying success 
- echo $check["user_id"];
+ echo json_encode(array('user_info'=>$check));
  }else{
  //displaying failure
  echo "failure";

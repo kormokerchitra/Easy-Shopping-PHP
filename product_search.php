@@ -2,13 +2,10 @@
 
 	$con = mysqli_connect('localhost','root','','easy_shopping');
 	$cat_name;
- 	// if($con){
- 	// 	echo "ok";
- 	// }else{
- 	// 	echo "not ok";
- 	// }
+ 	
+ 	$prod_name = $_POST["product_name"];
 
- 	$sql = "SELECT * FROM product_list";
+ 	$sql = "SELECT * FROM product_list WHERE product_name LIKE '%$prod_name%'";
 
  	$stored_res = mysqli_query($con,$sql);
 

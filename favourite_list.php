@@ -1,6 +1,8 @@
 <?php
 
 	$con = mysqli_connect('localhost','root','','easy_shopping');
+	
+	$user_id = $_POST["user_id"];
 
  	// if($con){
  	// 	echo "ok";
@@ -10,32 +12,33 @@
 
  	$sql = "SELECT * FROM favourite_list";
 
- 	$stored_res = mysqli_query($con,$sql);
+ 	$fav = mysqli_query($con,$sql);
 
  	$result = array();
 
- 	while($row = mysqli_fetch_array($stored_res)){
+ 	while($row = mysqli_fetch_array($fav)){
+ 		$prod_id=$row["prod_id"]; 
+		$sql2 = "SELECT * FROM product_list WHERE prod_id='$prod_id'";
+
+	 	$product = mysqli_query($con,$sql2);
+
+	 	$row1 = mysqli_fetch_array($product);
+	 	$product_name = $row1["product_name"];
+	 	$product_price = $row1["product_price"];
+	 	$prod_rating = $row1["prod_rating"];
+	 	$prod_discount = $row1["prod_discount"];
+	 	$product_img = $row1["product_img"];
  
  //Pushing name and id in the blank array created 
  array_push($result,array(
+ "fav_id"=>$row['fav_id'],
+ "user_id"=>$row['user_id'],
  "prod_id"=>$row['prod_id'],
- "product_name"=>$row['product_name'],
- "cat_id"=>$row['cat_id'],
- "cat_name"=>$row['cat_name'],
- "product_img"=>$row['product_img'],
- "product_code"=>$row['product_code'],
- "product_price"=>$row['product_price'],
- "prod_rating"=>$row['prod_rating'],
- "prod_discount"=>$row['prod_discount'],
- "prod_disc_date"=>$row['prod_disc_date'],
- "prod_description"=>$row['prod_description'],
- "prod_dimension"=>$row['prod_dimension'],
- "product_size"=>$row['product_size'],
- "shipping_weight"=>$row['shipping_weight'],
- "manuf_name"=>$row['manuf_name'],
- "prod_serial_num"=>$row['prod_serial_num'],
-  "user_id"=>$row['user_id'],
-   "full_name"=>$row['full_name'],
+ "product_name"=>$product_name,
+ "product_price"=>$product_price,
+ "prod_rating"=>$prod_rating,
+ "prod_discount"=>$prod_discount,
+ "product_img"=>$product_img
  ));
  }
 
