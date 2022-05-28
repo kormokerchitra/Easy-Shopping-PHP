@@ -19,6 +19,7 @@
  		$product_name = $row1["product_name"];
  		$product_price = $row1["product_price"];
  		$prod_discount = $row1["prod_discount"];
+ 		$prod_quantity = $row1["stock"];
  
 		 //Pushing name and id in the blank array created 
 		 array_push($result,array(
@@ -28,6 +29,7 @@
 		 "product_name"=>$product_name,
 		 "product_price"=>$product_price,
 		 "product_qnt"=>$row['product_qnt'],
+		 "main_product_qnt"=>$prod_quantity,
 		 "prod_discount"=>$prod_discount,
 		 "user_id"=>$row['user_id'],
 		 ));

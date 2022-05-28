@@ -1,7 +1,7 @@
 <?php
 
 	$con = mysqli_connect('localhost','root','','easy_shopping');
-	$user_name=""; $cat_name=""; $product_name=""; $user_id="";
+	$user_name=""; $cat_name=""; $product_name=""; $user_id=""; $user_pro_pic="";
 
 	$prod_id = $_POST["prod_id"];
 	$cat_id = $_POST["cat_id"];
@@ -43,6 +43,7 @@
 
 		 	while($row3 = mysqli_fetch_array($user)){
 				$user_name = $row3["full_name"];
+				$user_pro_pic = $row3["pro_pic"];
 		 	}
 		 	//Pushing name and id in the blank array created 
 			 array_push($result,array(
@@ -51,6 +52,7 @@
 			 "prod_id"=>$prod_id,
 			 "product_name"=>$product_name,
 			 "full_name"=>$user_name,
+			 "pro_pic"=>$user_pro_pic,
 			 "rating"=>$row['rating'],
 			 "reviews"=>$row['reviews'],
 			 "date"=>$row['date'],

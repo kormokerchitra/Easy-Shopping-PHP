@@ -22,8 +22,20 @@ $result = mysqli_query($con,"insert into order_details(order_id, inv_id, user_id
  
  //if we got some result 
  if(isset($result)){
- //displaying success 
- echo "Success";
+ 	$sql = "SELECT * FROM order_details WHERE inv_id = '$inv_id' AND user_id = '$user_id'";
+
+ 	$order = mysqli_query($con,$sql);
+
+ 	$row = mysqli_fetch_array($order);
+
+	//if we got some result 
+	 if(isset($row)){
+		 //displaying success 
+		 echo $row["order_id"];
+	 }else{
+		 //displaying failure
+		 echo "failure";
+	 }
  }else{
  //displaying failure
  echo "failure";
