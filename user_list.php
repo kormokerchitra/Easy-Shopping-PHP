@@ -19,6 +19,7 @@
  //Pushing name and id in the blank array created 
  array_push($result,array(
  "user_id"=>$row['user_id'],
+ "pro_pic"=>$row['pro_pic'],
  "full_name"=>$row['full_name'],
  "username"=>$row['username'],
  "address"=>$row['address'],
