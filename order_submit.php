@@ -32,6 +32,9 @@ $result = mysqli_query($con,"insert into order_details(order_id, inv_id, user_id
 	 if(isset($row)){
 		 //displaying success 
 		 echo $row["order_id"];
+
+		 $result_notify = mysqli_query($con,"insert into notifications(notification_id, inv_id, status, sender, receiver) values(null,'{$inv_id}', 'New', '{$user_id}', '4')");
+
 	 }else{
 		 //displaying failure
 		 echo "failure";

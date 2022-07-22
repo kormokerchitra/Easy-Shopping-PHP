@@ -6,9 +6,10 @@ $con=mysqli_connect('localhost','root','','easy_shopping');
  //Getting values 
  $email = $_POST['email'];
  $password = $_POST['password'];
+ $encPassword = md5($password);
  
  //Creating sql query
- $sql = "SELECT * FROM user_list WHERE email='$email' AND password='$password'";
+ $sql = "SELECT * FROM user_list WHERE email='$email' AND password='$encPassword'";
  
  //executing query
  $result = mysqli_query($con,$sql);

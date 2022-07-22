@@ -58,10 +58,10 @@
 			 "date"=>$row['date'],
 			 ));
  		}
- }
+ 	}
 
- echo json_encode(array('list'=>$result));
+ 	echo json_encode(array('list'=>$result));
  
- mysqli_close($con);
+ 	mysqli_close($con);
 
 ?>

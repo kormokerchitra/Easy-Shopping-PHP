@@ -22,6 +22,7 @@
        array_push($result,array(
        "order_id"=>$row['order_id'],
        "inv_id"=>$row['inv_id'],
+       "user_id"=>$row['user_id'],
        "full_name"=>$user_name,
         "total_product"=>$row['total_product'],
          "total_price"=>$row['total_price'],

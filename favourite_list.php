@@ -17,6 +17,7 @@
  	$result = array();
 
  	while($row = mysqli_fetch_array($fav)){
+ 		$rev_count=0;
  		$prod_id=$row["prod_id"]; 
 		$sql2 = "SELECT * FROM product_list WHERE prod_id='$prod_id'";
 
@@ -29,6 +30,11 @@
 	 	$prod_discount = $row1["prod_discount"];
 	 	$product_img = $row1["product_img"];
  
+ 		$rev_list = "SELECT * FROM reviews WHERE prod_id = '$prod_id'";
+	 	$rev = mysqli_query($con,$rev_list);
+	 	while($rev_data = mysqli_fetch_array($rev)){
+			$rev_count++;
+	 	}
  //Pushing name and id in the blank array created 
  array_push($result,array(
  "fav_id"=>$row['fav_id'],
@@ -37,6 +43,7 @@
  "product_name"=>$product_name,
  "product_price"=>$product_price,
  "prod_rating"=>$prod_rating,
+ "rev_count"=>$rev_count,
  "prod_discount"=>$prod_discount,
  "product_img"=>$product_img
  ));
