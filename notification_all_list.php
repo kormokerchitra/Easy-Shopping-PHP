@@ -1,11 +1,15 @@
 <?php
 
 	$con = mysqli_connect('localhost','root','','easy_shopping');
-   $user_name;
+  $user_name; $sql;
 
-   $receiver = $_POST["receiver"];
+  $receiver = $_POST["receiver"];
 
- 	$sql = "SELECT * FROM notifications WHERE receiver LIKE '$receiver'";
+  if($receiver == "admin"){
+    $sql = "SELECT * FROM notifications";
+  }else{
+    $sql = "SELECT * FROM notifications WHERE receiver LIKE '$receiver'";
+  }
 
  	$notification = mysqli_query($con,$sql);
 
