@@ -14,6 +14,7 @@ $cat_id = $_POST["cat_id"];
 $product_img = $_POST["product_img"];
 $product_code = $_POST["product_code"];
 $product_price = $_POST["product_price"];
+$prod_color = $_POST["prod_color"];
 $prod_description = $_POST["prod_description"];
 $prod_dimension = $_POST["prod_dimension"];
 $product_size = $_POST["product_size"];
@@ -44,7 +45,7 @@ if($product_img!=""){
 	}
 }
 
-$done = mysqli_query($con, "update product_list set product_name='$product_name', cat_id='$cat_id', product_img='$file_url', product_code='$product_code', product_price='$product_price', prod_description='$prod_description', prod_dimension='$prod_dimension', product_size='$product_size', shipping_weight='$shipping_weight', manuf_name='$manuf_name', prod_serial_num='$prod_serial_num', stock='$stock' where prod_id='$prod_id'");
+$done = mysqli_query($con, "update product_list set product_name='$product_name', cat_id='$cat_id', product_img='$file_url', product_code='$product_code', product_price='$product_price', prod_color='$prod_color', prod_description='$prod_description', prod_dimension='$prod_dimension', product_size='$product_size', shipping_weight='$shipping_weight', manuf_name='$manuf_name', prod_serial_num='$prod_serial_num', stock='$stock' where prod_id='$prod_id'");
 
 //if we got some result 
  if(isset($done)){

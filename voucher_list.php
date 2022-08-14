@@ -16,14 +16,15 @@
 
  	while($row = mysqli_fetch_array($stored_res)){
  
- //Pushing name and id in the blank array created 
- array_push($result,array(
- "vou_id"=>$row['vou_id'],
- "voucher_name"=>$row['voucher_name'],
- "voucher_amount"=>$row['voucher_amount'],
-  "vou_exp_date"=>$row['vou_exp_date'],
-   "voucher_status"=>$row['voucher_status'],
- ));
+ 		//Pushing name and id in the blank array created 
+		array_push($result,array(
+		"vou_id"=>$row['vou_id'],
+		"voucher_name"=>$row['voucher_name'],
+		"voucher_amount"=>$row['voucher_amount'],
+		"vou_exp_date"=>$row['vou_exp_date'],
+		"voucher_exp_amount"=>$row['voucher_exp_amount'],
+		"voucher_status"=>$row['voucher_status'],
+	));
  }
 
  echo json_encode(array('voucher_list'=>$result));

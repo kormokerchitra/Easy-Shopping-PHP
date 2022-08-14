@@ -42,6 +42,7 @@
 		 "rev_count"=>$rev_count,
 		 "prod_discount"=>$row['prod_discount'],
 		 "prod_disc_date"=>$row['prod_disc_date'],
+		 "prod_color"=>$row['prod_color'],
 		 "prod_description"=>$row['prod_description'],
 		 "prod_dimension"=>$row['prod_dimension'],
 		 "product_size"=>$row['product_size'],

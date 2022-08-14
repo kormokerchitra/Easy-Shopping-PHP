@@ -10,12 +10,12 @@
  	$key = mysqli_query($con,$sql);
 
  	if(isset($key)){
-			 //displaying success 
-			 echo "Success";
-		 }else{
-			 //displaying failure
-			 echo "failure";
-		 }
+		 //displaying success 
+		 echo "Success";
+	 }else{
+		 //displaying failure
+		 echo "failure";
+	 }
 
  
 mysqli_close($con);

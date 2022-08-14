@@ -17,6 +17,7 @@ $product_code = $_POST["product_code"];
 $product_price = $_POST["product_price"];
 $prod_discount = $_POST["prod_discount"];
 $prod_disc_date = $_POST["prod_disc_date"];
+$prod_color = $_POST["prod_color"];
 $prod_description = $_POST["prod_description"];
 $prod_dimension = $_POST["prod_dimension"];
 $product_size = $_POST["product_size"];
@@ -43,7 +44,7 @@ if($product_img!=""){
 	}
 }
 
-$result = mysqli_query($con,"insert into product_list(prod_id, product_name, cat_id, product_img, product_code, product_price, prod_rating, prod_discount, prod_disc_date, prod_description, prod_dimension, product_size, shipping_weight, manuf_name, prod_serial_num, stock) values(null,'{$product_name}', '{$cat_id}', '{$file_url}', '{$product_code}', '{$product_price}', '0', '{$prod_discount}', '{$prod_disc_date}', '{$prod_description}', '{$prod_dimension}', '{$product_size}', '{$shipping_weight}', '{$manuf_name}', '{$prod_serial_num}', '{$stock}')");
+$result = mysqli_query($con,"insert into product_list(prod_id, product_name, cat_id, product_img, product_code, product_price, prod_rating, prod_discount, prod_disc_date, prod_color, prod_description, prod_dimension, product_size, shipping_weight, manuf_name, prod_serial_num, stock) values(null,'{$product_name}', '{$cat_id}', '{$file_url}', '{$product_code}', '{$product_price}', '0', '{$prod_discount}', '{$prod_disc_date}', '{$prod_color}', '{$prod_description}', '{$prod_dimension}', '{$product_size}', '{$shipping_weight}', '{$manuf_name}', '{$prod_serial_num}', '{$stock}')");
  
  //if we got some result 
  if(isset($result)){
