@@ -1,12 +1,105 @@
 <?php
+    $user_id=""; $name=""; $email="";$address="";$phone="";$username="";
+    
+    session_start();
 
     $base_url="http://localhost/";
-    $url = $base_url."easy_shopping/user_list.php";
-    $json = file_get_contents($url);
-    $json_data = json_decode($json, true);
 
-    $user_list = $json_data["user_list"];
-    $count = count($user_list);
+    if(isset($_SESSION['user_id'])){
+        $user_id = $_SESSION['user_id'];
+
+        $url = $base_url."easy_shopping/user_get.php";
+        $postdata = http_build_query(
+            array(
+                'user_id' => $user_id,
+            )
+        );
+
+        $opts = array('http' =>
+            array(
+                'method' => 'POST',
+                'header' => 'Content-type: application/x-www-form-urlencoded',
+                'content' => $postdata
+            )
+        );
+        $context = stream_context_create($opts);
+
+        $response = file_get_contents($url, false, $context);
+
+        $json_data = json_decode($response, true);
+
+        $user_info = $json_data["user_info"];
+
+        $name = $user_info[0]["full_name"];
+        $address = $user_info[0]["address"];
+        $email = $user_info[0]["email"];
+        $phone = $user_info[0]["phone_num"];
+        $username = $user_info[0]["username"];
+    }
+
+    if (isset($_POST['userUpdateBtn'])) {
+            
+        $emailuser = $_POST['emailuser'];
+        $phoneuser = $_POST['phoneuser'];
+
+        $url2 = $base_url."easy_shopping/user_edit.php";
+        
+        $postdata = http_build_query(
+            array(
+                'user_id' => $user_id,
+                'image' => "",
+                'full_name' => $name,
+                'address' => $address,
+                'email' => $emailuser,
+                'phone_num' => $phoneuser,
+                'username' => $username,
+            )
+        );
+
+        $opts = array('http' =>
+            array(
+                'method' => 'POST',
+                'header' => 'Content-type: application/x-www-form-urlencoded',
+                'content' => $postdata
+            )
+        );
+        $context = stream_context_create($opts);
+
+        $response2 = file_get_contents($url2, false, $context);
+
+        if($response!="failure"){
+            header("Location: profile.php");
+        }
+    }
+
+    // if (isset($_POST['passwordUpdateBtn'])) {
+            
+    //     $pass_update = $_POST['pass_update'];
+
+    //     $url3 = $base_url."easy_shopping/user_pass_update.php";
+        
+    //     $postdata = http_build_query(
+    //         array(
+    //             'user_id' => $user_id,
+    //             'password' => $pass_update,
+    //         )
+    //     );
+
+    //     $opts = array('http' =>
+    //         array(
+    //             'method' => 'POST',
+    //             'header' => 'Content-type: application/x-www-form-urlencoded',
+    //             'content' => $postdata
+    //         )
+    //     );
+    //     $context = stream_context_create($opts);
+
+    //     $response2 = file_get_contents($url3, false, $context);
+
+    //     if($response!="failure"){
+    //         header("Location: profile.php");
+    //     }
+    // }
 
     include "header.php";
 
@@ -58,14 +151,14 @@
                             <div class="col-lg-8 mb-5">
                                 <div class="contact-form">
                                     <div id="success"></div>
-                                    <form name="profileEdit" id="profileForm" nomethod="POST" action="">
+                                    <form name="profileEdit" id="profileForm" method="POST" action="">
                                         <div class="control-group">
                                             <!-- <label for="fullname"><b>Full Name</b></label>
                                             <input type="text" class="form-control" id="fullname" placeholder="Enter your full name..." />
                                             <p class="help-block text-danger"></p> -->
                                             <label><b>Full Name</b></label>
                                             <br/>
-                                            <label class="form-control" style="border-radius: 25px 25px;">Enter your full name...</label>
+                                            <label class="form-control" style="border-radius: 25px 25px;"><?php echo $name; ?></label>
                                         </div>
                                         <div class="control-group">
                                             <!-- <label for="address"><b>Address</b></label>
@@ -73,22 +166,22 @@
                                             <p class="help-block text-danger"></p> -->
                                             <label><b>Address</b></label>
                                             <br/>
-                                            <label class="form-control" style="border-radius: 25px 25px;">Enter your address...</label>
+                                            <label class="form-control" style="border-radius: 25px 25px;"><?php echo $address; ?></label>
                                         </div>
                                         <div class="control-group">
                                             <label for="email"><b>Email</b></label>
                                             <span class="text-danger">*</span>
-                                            <input type="text" class="form-control" id="email" placeholder="Enter your email..." required data-validation-required-message="Email is required" style="border-radius: 25px 25px;" />
+                                            <input type="text" class="form-control" id="email" value = "<?php echo $email; ?>" placeholder="Enter your email..." name = "emailuser" required data-validation-required-message="Email is required" style="border-radius: 25px 25px;" />
                                             <p class="help-block text-danger"></p>
                                         </div>
                                         <div class="control-group">
                                             <label for="phonenum"><b>Phone Number</b></label>
                                             <span class="text-danger">*</span>
-                                            <input type="password" class="form-control" id="phonenum" placeholder="Enter your phone number..." required data-validation-required-message="Phone number is required" style="border-radius: 25px 25px;" />
+                                            <input type="text" class="form-control" id="phonenum" value = "<?php echo $phone; ?>"placeholder="Enter your phone number..." name="phoneuser" required data-validation-required-message="Phone number is required" style="border-radius: 25px 25px;" />
                                             <p class="help-block text-danger"></p>
                                         </div>
                                         <div class="row justify-content-center">
-                                            <button class="btn btn-primary py-2 px-4" type="submit" id="infoupdateButton" style="border-radius: 25px 25px;">Update</button>
+                                            <button class="btn btn-primary py-2 px-4" type="submit" id="infoupdateButton" name="userUpdateBtn" style="border-radius: 25px 25px;">Update</button>
                                         </div>
                                     </form>
                                 </div>
@@ -105,17 +198,17 @@
                                         <div class="control-group">
                                             <label for="newpass"><b>New Password</b></label>
                                             <span class="text-danger">*</span>
-                                            <input type="text" class="form-control" id="newpass" placeholder="Enter your new password..." required data-validation-required-message="New password is required" style="border-radius: 25px 25px;" />
+                                            <input type="text" class="form-control" id="newpass" name="pass_update" placeholder="Enter your new password..." required data-validation-required-message="New password is required" style="border-radius: 25px 25px;" />
                                             <p class="help-block text-danger"></p>
                                         </div>
                                         <div class="control-group">
-                                            <label for="address"><b>Confirm Password</b></label>
+                                            <label for="conpass"><b>Confirm Password</b></label>
                                             <span class="text-danger">*</span>
-                                            <input type="text" class="form-control" id="address" placeholder="Enter your confirm password... " required data-validation-required-message="Confirm password is required" style="border-radius: 25px 25px;" />
+                                            <input type="text" class="form-control" id="conpass" name="pass_update" placeholder="Enter your confirm password... " required data-validation-required-message="Confirm password is required" style="border-radius: 25px 25px;" />
                                             <p class="help-block text-danger"></p>
                                         </div>
                                         <div class="row justify-content-center">
-                                            <button class="btn btn-primary py-2 px-4" type="submit" id="passupdateButton" style="border-radius: 25px 25px;">Update</button>
+                                            <button class="btn btn-primary py-2 px-4" type="submit" id="passupdateButton" name="passwordUpdateBtn" style="border-radius: 25px 25px;">Update</button>
                                         </div>
                                     </form>
                                 </div>

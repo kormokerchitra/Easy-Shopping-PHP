@@ -132,7 +132,7 @@
                                                 $prod_discount = $product_list[$i]["prod_discount"];
 
                                                 if($product_list[$i]["product_img"]==""){
-                                                    $img = 'img/hp1.jpeg';
+                                                    $img = 'img/product_back.jpg';
                                                 }
 
                                                 $jsonBody = json_encode($product_list[$i]);

@@ -1,3 +1,51 @@
+<?php
+    session_start();
+
+    if(isset($_SESSION['user_id'])){
+        header("Location: dashboard.php");
+    }
+    $base_url="http://localhost/";
+    if(isset($_POST['loginBtn'])){
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+
+        $url = $base_url."easy_shopping/login.php";
+        $postdata = http_build_query(
+            array(
+                'email' => $email,
+                'password' => $password,
+            )
+        );
+
+        $opts = array('http' =>
+            array(
+                'method' => 'POST',
+                'header' => 'Content-type: application/x-www-form-urlencoded',
+                'content' => $postdata
+            )
+        );
+        $context = stream_context_create($opts);
+
+        $response = file_get_contents($url, false, $context);
+
+        if($response != "failure"){
+            $json_data = json_decode($response, true);
+            
+            $user_info = $json_data["user_info"];
+            $_SESSION['user_id'] = $user_info["user_id"];
+            if($user_info["user_id"] == "4"){
+               header("Location: dashboard.php"); 
+           }else{
+               echo "You are not an authorised user";
+           }
+            
+        }else{
+            echo "Cannot login user";
+        }
+    }
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -70,19 +118,19 @@
                             <div class="col-lg-12 mb-5">
                                 <div class="contact-form">
                                     <div id="success"></div>
-                                    <form name="sentMessage" id="contactForm" method="POST" action="">
+                                    <form name="login" id="loginForm" method="POST" action="">
                                         <div class="control-group">
                                             <label for="email"><b>Email</b></label>
-                                            <input type="text" class="form-control" id="email" placeholder="Enter your email..." required data-validation-required-message="Email is required" style="border-radius: 25px 25px;" />
+                                            <input type="text" class="form-control" id="email" name="email"  placeholder="Enter your email..." required data-validation-required-message="Email is required" style="border-radius: 25px 25px;" />
                                             <p class="help-block text-danger"></p>
                                         </div>
                                         <div class="control-group">
                                             <label for="password"><b>Password</b></label>
-                                            <input type="password" class="form-control" id="password" placeholder="Enter your password..." required data-validation-required-message="Password is required" style="border-radius: 25px 25px;" />
+                                            <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password..." required data-validation-required-message="Password is required" style="border-radius: 25px 25px;" />
                                             <p class="help-block text-danger"></p>
                                         </div>
                                         <div class="row justify-content-center">
-                                            <button class="btn btn-primary py-2 px-4" type="submit" id="loginButton" style="border-radius: 25px 25px;">Login</button>
+                                            <button class="btn btn-primary py-2 px-4" type="submit" id="loginButton" name="loginBtn" style="border-radius: 25px 25px;">Login</button>
                                         </div>
                                     </form>
                                 </div>

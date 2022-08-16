@@ -1,5 +1,5 @@
 	
-	<!-- Footer Start -->
+    <!-- Footer Start -->
     <div class="container-fluid bg-secondary text-dark mt-5 pt-5">
         <div class="row border-top border-light mx-xl-5 py-4">
             <div class="col-md-6 px-xl-0">
@@ -32,35 +32,56 @@
                     <div class="row justify-content-center px-xl-5">
                         <div class="col-lg-12 mb-5 px-xl-4">
                             
-                            <div class="row">
-                                <br/>
-                                <h6 class="font-weight-bold mb-2"><img src="img/logo.jpg" width="20"></img>&nbsp;&nbsp;Order status changed to New for invoice id <a href="#">#568</a></h6>
-                                <br/>
-                            </div>
-                            <div class="row"><h7>Today</h7></div>
-                            <hr>
-                            <div class="row">
-                                <br/>
-                                <h6 class="font-weight-bold mb-2"><img src="img/logo.jpg" width="20"></img>&nbsp;&nbsp;Order status changed to New for invoice id <a href="#">#568</a></h6>
-                                <br/>
-                            </div>
-                            <div class="row"><h7>Today</h7></div>
-                            <hr>
-                            <div class="row">
-                                <br/>
-                                <h6 class="font-weight-bold mb-2"><img src="img/logo.jpg" width="20"></img>&nbsp;&nbsp;Order status changed to New for invoice id <a href="#">#568</a></h6>
-                                <br/>
-                            </div>
-                            <div class="row"><h7>Today</h7></div>
-                            <hr>
-                            <div class="row">
-                                <br/>
-                                <h6 class="font-weight-bold mb-2"><img src="img/logo.jpg" width="20"></img>&nbsp;&nbsp;Order status changed to New for invoice id <a href="#">#568</a></h6>
-                                <br/>
-                            </div>
-                            <div class="row"><h7>Today</h7></div>
-                            <hr>
+                            <?php
+                                $base_url="http://localhost/";
+                                for ($i=0; $i < $total_count; $i++) {
+                                    $inv_id = $notification_list[$i]['inv_id'];
+                                    $date_time = $notification_list[$i]['datetime'];
+                                    $seen = $notification_list[$i]['seen'];
 
+                                    //$today = date("Y-m-d H:i:s");
+                                    //$today_time = strtotime($today);
+                                    //$expire_time = strtotime($date_time);
+                                    //$dif = abs($today_time - $expire_time);
+
+                                    if($seen == "0"){
+                                        $notification_id = $notification_list[$i]['notification_id'];
+                                        $receiver = $notification_list[$i]['receiver'];
+
+                                        $url = $base_url."easy_shopping/notification_seen_update.php";
+                                        $postdata = http_build_query(
+                                            array(
+                                                'notification_id' => $notification_id,
+                                                'receiver' => $receiver,
+                                            )
+                                        );
+
+                                        $opts = array('http' =>
+                                            array(
+                                                'method' => 'POST',
+                                                'header' => 'Content-type: application/x-www-form-urlencoded',
+                                                'content' => $postdata
+                                            )
+                                        );
+                                        $context = stream_context_create($opts);
+
+                                        $response = file_get_contents($url, false, $context);
+
+                                        if($response == "Success"){
+
+                                        }
+                                    }
+                                    
+                                echo "<div class='row'>
+                                        <br/>
+                                        <h6 class='font-weight-bold mb-2'><img src='img/logo.jpg' width='20'></img>&nbsp;&nbsp;Order status changed to New for invoice id <a href='#'>#$inv_id</a></h6>
+                                        <br/>
+                                    </div>
+                                    <div class='row'><h7>$date_time</h7></div>
+                                    <hr>";
+                                }
+                            ?>
+                            
                             <!-- <div class="align-middle">
                                 <div class="nav-profile-text d-flex flex-column bg-whiteblue">
                                     <br/>
@@ -103,12 +124,12 @@
                         <div class="col-lg-12 mb-5">
                             <div class="contact-form">
                                 <div id="success"></div>
-                                <form name="sentMessage" id="contactForm" method="POST" action="">
+                                <form name="logoutMessage" id="logoutForm" method="POST" action="">
                                     <div class="control-group">
                                         <p class="text-center">Do you want to logout?</p>
                                         <div class="row justify-content-center">
                                             <button class="btn btn-primary py-2 px-4 bg-red" type="submit" id="noButton" style="border-radius: 25px 25px;">No</button>&nbsp;&nbsp;&nbsp;
-                                            <button class="btn btn-primary py-2 px-4 bg-green" type="submit" id="yesButton" style="border-radius: 25px 25px;">Yes</button>
+                                            <button class="btn btn-primary py-2 px-4 bg-green" type="submit" id="yesButton" name="yesButtonLogout" style="border-radius: 25px 25px;">Yes</button>
                                         </div>
                                     </div>
                                 </form>

@@ -1,7 +1,13 @@
 <?php
 
-    // $prod_id = "";
-    // $isEditSuccess="false";
+    $file_url = ""; $status = ""; $productImageEdit=""; $url2="";
+    $upload_path = 'img/';
+ 
+    // //creating the upload url
+    $upload_url = 'easy_shopping/admin/'.$upload_path;
+
+    $prod_id = "";
+    $isEditSuccess="false";
 
     $base_url="http://localhost/";
 
@@ -27,8 +33,6 @@
         $prod_img = $base_url.$prod_img;
     }
     // echo $product_name;
-
-    $base_url="http://localhost/";
     $url = $base_url."easy_shopping/category_list.php";
     $json = file_get_contents($url);
     $json_data = json_decode($json, true);
@@ -36,13 +40,12 @@
     $cat_list = $json_data["cat_list"];
     $total_count = count($cat_list);
 
-    // $base_url="http://localhost/";
-    // $url = $base_url."easy_shopping/product_list.php";
-    // $json = file_get_contents($url);
-    // $json_data = json_decode($json, true);
+    $url = $base_url."easy_shopping/product_list.php";
+    $json = file_get_contents($url);
+    $json_data = json_decode($json, true);
 
-    // $product_list = $json_data["product_list"];
-    // $count = count($product_list);
+    $product_list = $json_data["product_list"];
+    $prod_count = count($product_list);
 
     if(isset($_POST['editProductName'])){
         $categoryIdEdit = $_POST['catIdEdit'];
@@ -60,6 +63,26 @@
         $productStockEdit = $_POST['productStockEdit'];
         $productImageEdit = $_POST['productImageEdit'];
         $productIDEdit = $_POST['productIDEdit'];
+
+        $date = time();
+
+        if(isset($_FILES['productImageEdit'])){
+            $errors= array();
+            $file_name = $_FILES['productImageEdit']['name'];
+            $file_size = $_FILES['productImageEdit']['size'];
+            $file_tmp = $_FILES['productImageEdit']['tmp_name'];
+            $file_type = $_FILES['productImageEdit']['type'];
+            // $file_ext=strtolower(end(explode('.',$_FILES['productImage']['name'])));
+          
+            $extensions= array("jpeg","jpg","png");
+            $date = time();
+          
+            $file_url = $upload_path . $date . '.png';
+            $productImageEdit = $upload_url . $date . '.png';
+            if(move_uploaded_file($file_tmp,$file_url)){
+            }else{
+            }
+        }
 
         $url2 = $base_url."easy_shopping/product_edit.php";
         $postdata = http_build_query(
@@ -94,6 +117,11 @@
         $response = file_get_contents($url2, false, $context);
         $isEditSuccess = "true";
         // header("Location: products.php");
+        $json = file_get_contents($url);
+        $json_data = json_decode($json, true);
+
+        $product_list = $json_data["product_list"];
+        $prod_count = count($product_list);
     }
 
     include "header.php";
@@ -136,16 +164,16 @@
                 <div class="container-fluid pt-5">
                     <div class="text-center mb-4">
                         <h2 class="section-title px-5"><span class="px-2">Edit Product</span></h2>
-                        <!-- <?php
-                            // if($isEditSuccess == "true"){
-                            //     echo "<div class='alert alert-success alert-dismissible d-flex align-items-center fade show'>
-                            //         <i class='bi-check-circle-fill'></i>
-                            //         <strong class='mx-4'>Success!</strong> Product edited successfully.
-                            //         <button type='button' class='close' data-dismiss='alert' aria-label=
-                            //         'Close'><span aria-hidden='true'>&times;</span></button>
-                            //     </div>";    
-                            // }
-                        ?> --> 
+                        <?php
+                            if($isEditSuccess == "true"){
+                                echo "<div class='alert alert-success alert-dismissible d-flex align-items-center fade show'>
+                                    <i class='bi-check-circle-fill'></i>
+                                    <strong class='mx-4'>Success!</strong> Product edited successfully.
+                                    <button type='button' class='close' data-dismiss='alert' aria-label=
+                                    'Close'><span aria-hidden='true'>&times;</span></button>
+                                </div>";    
+                            }
+                        ?> 
                     </div>
                     <!-- <div class="row px-xl-5">
                         <div class="btn shadow-none d-flex align-items-center justify-content-between text-white w-100">
@@ -268,15 +296,14 @@
                                             <label for="productimage"><b>Product Image</b></label>
                                             <div class="imgcontainer">
                                                 <?php 
-                                                    echo "<img src='$prod_img' alt='Avatar' width='250' height='250'>"; 
+                                                    echo "<img id='output' src='$prod_img' alt='Avatar' width='250' height='250' style='cursor: pointer;'>"; 
                                                 ?>
                                                 <!-- <img src="img/addimage.png" alt="Avatar" width="200" height="200"> -->
                                             </div>
-                                            <input type="file" id="fileImg" name="productImageEdit" placeholder="Select Image..." />
+                                            <input type="file" id="fileImg" name="productImageEdit" placeholder="Select Image..." onchange="output.src=window.URL.createObjectURL(this.files[0])" />
                                             <input type="hidden" value="$prod_id" name="productIDEdit" />
                                             <p class="help-block text-danger"></p>
                                         </div>
-
 
                                         <!-- <div class="control-group">
                                             <label for="productimage"><b>Product Image</b></label>
@@ -286,7 +313,6 @@
                                             <input type="file" id="fileImg" name="productImage" placeholder="Select Image..." onchange="output.src=window.URL.createObjectURL(this.files[0])" />
                                             <p class="help-block text-danger"></p>
                                         </div> -->
-
 
                                         <div class="row justify-content-center">
                                             <button class="btn btn-primary py-2 px-4" type="submit" id="prodEditButton" name="editProductName" style="border-radius: 25px 25px;">Edit</button>

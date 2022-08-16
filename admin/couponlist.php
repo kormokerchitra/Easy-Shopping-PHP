@@ -273,7 +273,7 @@
                                                                                         <div id='success'></div>
                                                                                         <form name='sentMessage' id='contactForm' method='POST'>
                                                                                             <div class='control-group'>
-                                                                                                <p class='text-center'>Do you want to delete the coupon/voucher $name?</p>
+                                                                                                <p class='text-center'>Do you want to delete the coupon/voucher #$name?</p>
                                                                                                 <input type='hidden' class='form-control' placeholder='' name = 'vouid' value='$vou_id' />
                                                                                                 <div class='row justify-content-center'>
                                                                                                     <button class='btn btn-primary py-2 px-4 bg-red' type='submit' id='noButton' name='noButton' style='border-radius: 25px 25px;'>No</button>&nbsp;&nbsp;&nbsp;
@@ -437,7 +437,7 @@
                                                                                         <div id='success'></div>
                                                                                         <form name='sentMessage' id='contactForm' method='POST'>
                                                                                             <div class='control-group'>
-                                                                                                <p class='text-center'>Do you want to delete the coupon/voucher $name?</p>
+                                                                                                <p class='text-center'>Do you want to delete the coupon/voucher #$name?</p>
                                                                                                 <input type='hidden' class='form-control' placeholder='' name = 'vouid' value='$vou_id' />
                                                                                                 <div class='row justify-content-center'>
                                                                                                     <button class='btn btn-primary py-2 px-4 bg-red' type='submit' id='noButton' name='noButton' style='border-radius: 25px 25px;'>No</button>&nbsp;&nbsp;&nbsp;

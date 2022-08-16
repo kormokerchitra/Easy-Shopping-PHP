@@ -1,4 +1,54 @@
 
+<?php
+    $base_url="http://localhost/";
+    $user_id = ""; $c_notify = "0"; $total_count = "0";
+
+    if(isset($_SESSION['user_id'])){
+        $user_id = $_SESSION['user_id'];
+    }
+
+    if(isset($_POST['yesButtonLogout'])){
+        echo "clickd";
+        session_start();
+        session_unset();
+        header("Location: index.php");
+    }else{
+        
+    }
+
+    $url = $base_url."easy_shopping/notification_all_list.php";
+    $postdata = http_build_query(
+        array(
+            'receiver' => 'admin',
+        )
+    );
+
+    $opts = array('http' =>
+        array(
+            'method' => 'POST',
+            'header' => 'Content-type: application/x-www-form-urlencoded',
+            'content' => $postdata
+        )
+    );
+    $context = stream_context_create($opts);
+
+    $response = file_get_contents($url, false, $context);
+
+    $json_data_notify = json_decode($response, true);
+        
+    $notification_list = $json_data_notify["notification_list"];
+    $total_count = count($notification_list);
+
+    for ($i=0; $i < $total_count; $i++) { 
+        # code...
+        if ($notification_list[$i]["seen"] == "0" &&
+          $notification_list[$i]["receiver"] == $user_id){
+            $c_notify = count($notification_list);
+        }
+    }
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -48,8 +98,7 @@
         });
     });
     </script>
-    <style>
-        
+    <style>    
         /*.search-box{
             width: 300px;
             position: relative;
@@ -126,7 +175,7 @@
             <div class="col-lg-3 col-6 text-right">
                 <div class="btn border-secondary bg-grey" id="notification" style="border-radius: 25px 25px;">
                     <i class="fa fa-bell text-primary"></i>
-                    <span class="badge">0</span>
+                    <span class="badge"><?php echo $c_notify; ?></span>
                 </div>
                 <div class="btn border-secondary bg-grey" id="logout" style="border-radius: 25px 25px;">
                     <i class="fa fa-power-off text-primary"></i>
