@@ -13,6 +13,12 @@
     $shippedCount=0;
     $deliveredCount=0;
     $cancelledCount=0;
+    $inv_id = "";
+
+    if(isset($_GET["inv_id"])){
+        $inv_id = $_GET["inv_id"];
+    }
+
     for ($i=0; $i < $count; $i++){
         if($order_list[$i]["status"] == "Processing"){
             $processingCount++;
@@ -24,6 +30,13 @@
             $deliveredCount++;
         }else if($order_list[$i]["status"] == "Cancelled"){
             $cancelledCount++;
+        }
+
+        if($inv_id != ""){
+            if($inv_id == $order_list[$i]["inv_id"]){
+                $jsonBody = json_encode($order_list[$i]);
+                header("Location: orderdetails.php?jsonBody=$jsonBody");
+            }
         }
     }
 

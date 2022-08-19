@@ -14,6 +14,7 @@
     $jsonBody = $_GET['jsonBody'];
     $json_data = json_decode($jsonBody, true);
 
+    $prod_id = $json_data["prod_id"];
     $cat_name = $json_data["cat_name"];
     $product_name = $json_data["product_name"];
     $product_code = $json_data["product_code"];
@@ -61,7 +62,7 @@
         $manufNameEdit = $_POST['manufNameEdit'];
         $prodSerialNumEdit = $_POST['prodSerialNumEdit'];
         $productStockEdit = $_POST['productStockEdit'];
-        $productImageEdit = $_POST['productImageEdit'];
+        // $productImageEdit = $_POST['productImageEdit'];
         $productIDEdit = $_POST['productIDEdit'];
 
         $date = time();
@@ -73,18 +74,17 @@
             $file_tmp = $_FILES['productImageEdit']['tmp_name'];
             $file_type = $_FILES['productImageEdit']['type'];
             // $file_ext=strtolower(end(explode('.',$_FILES['productImage']['name'])));
-          
             $extensions= array("jpeg","jpg","png");
             $date = time();
           
             $file_url = $upload_path . $date . '.png';
-            $productImageEdit = $upload_url . $date . '.png';
+            $prod_img = $upload_url . $date . '.png';
             if(move_uploaded_file($file_tmp,$file_url)){
             }else{
             }
         }
 
-        $url2 = $base_url."easy_shopping/product_edit.php";
+        $url2 = $base_url."easy_shopping/admin/product_edit_web.php";
         $postdata = http_build_query(
             array(
                 'cat_id' => $categoryIdEdit,
@@ -100,7 +100,7 @@
                 'manuf_name' => $manufNameEdit,
                 'prod_serial_num' => $prodSerialNumEdit,
                 'stock' => $productStockEdit,
-                'product_img' => $productImageEdit,
+                'product_img' => $prod_img,
                 'prod_id' => $productIDEdit,
             )
         );
@@ -115,6 +115,7 @@
         $context = stream_context_create($opts);
 
         $response = file_get_contents($url2, false, $context);
+        echo $response;
         $isEditSuccess = "true";
         // header("Location: products.php");
         $json = file_get_contents($url);
@@ -188,7 +189,7 @@
                                         <p class="text-primary">Here<span class="text-danger"> *</span> marked fields are mandatory.</p>
                                     </div>
                                     <div id="success"></div>
-                                    <form name="editProduct" id="editForm" action="" method="POST">
+                                    <form name="editProduct" id="editForm" action="" method="POST" enctype="multipart/form-data">
                                         <div class="control-group">
                                             <label for="categoryname"><b>Category Name</b></label>
                                             <span class="text-danger">*</span><Br/>
@@ -212,35 +213,35 @@
                                             <span class="text-danger">*</span>
                                             <input type="text" class="form-control" id="productname" placeholder="Enter product name..." required value="<?php echo $product_name; ?>" name="productNameEdit" style="border-radius: 25px 25px;" />
                                             <input type="hidden" class="form-control" id="productname" placeholder="Enter product name..." required value="<?php echo $cat_id; ?>" name="catIdEdit" style="border-radius: 25px 25px;" />
-                                            <input type="hidden" value="$prod_id" name="productIDEdit" style="border-radius: 25px 25px;" />
+                                            <input type="hidden" value="<?php echo $prod_id; ?>" name="productIDEdit" style="border-radius: 25px 25px;" />
                                             <p class="help-block text-danger"></p>
                                         </div>
                                         <div class="control-group">
                                             <label for="productcode"><b>Product Code</b></label>
                                             <span class="text-danger">*</span>
                                             <input type="text" class="form-control" id="productcode" placeholder="Enter product code..." required value="<?php echo $product_code; ?>" name="productCodeEdit" style="border-radius: 25px 25px;" />
-                                            <input type="hidden" value="$prod_id" name="productIDEdit" style="border-radius: 25px 25px;" />
+                                            <input type="hidden" value="<?php echo $prod_id; ?>" name="productIDEdit" style="border-radius: 25px 25px;" />
                                             <p class="help-block text-danger"></p>
                                         </div>
                                         <div class="control-group">
                                             <label for="productprice"><b>Product Price</b></label>
                                             <span class="text-danger">*</span>
                                             <input type="text" class="form-control" id="productprice" placeholder="Enter product price..." required value="<?php echo $product_price; ?>" name="productPriceEdit" style="border-radius: 25px 25px;" />
-                                            <input type="hidden" value="$prod_id" name="productIDEdit" style="border-radius: 25px 25px;" />
+                                            <input type="hidden" value="<?php echo $prod_id; ?>" name="productIDEdit" style="border-radius: 25px 25px;" />
                                             <p class="help-block text-danger"></p>
                                         </div>
                                         <div class="control-group">
                                             <label for="productcolor"><b>Product Color</b></label>
                                             <span class="text-danger">*</span>
                                             <input type="text" class="form-control" id="productcolor" placeholder="Enter product color..." required value="<?php echo $product_color; ?>" name="productColorEdit" style="border-radius: 25px 25px;" />
-                                            <input type="hidden" value="$prod_id" name="productIDEdit" style="border-radius: 25px 25px;" />
+                                            <input type="hidden" value="<?php echo $prod_id; ?>" name="productIDEdit" style="border-radius: 25px 25px;" />
                                             <p class="help-block text-danger"></p>
                                         </div>
                                         <div class="control-group">
                                             <label for="productdescription"><b>Product Description</b></label>
                                             <span class="text-danger">*</span>
                                             <textarea id="productdescription" rows="3" class="form-control" placeholder="Enter product description..." required value="" name="productDescriptionEdit" style="border-radius: 25px 25px;"><?php echo $prod_description; ?></textarea>
-                                            <input type="hidden" value="$prod_id" name="productIDEdit" style="border-radius: 25px 25px;" />
+                                            <input type="hidden" value="<?php echo $prod_id; ?>" name="productIDEdit" style="border-radius: 25px 25px;" />
                                             <p class="help-block text-danger"></p>
                                         </div>
                                         <!-- <div class="control-group">
@@ -256,40 +257,40 @@
                                         <div class="control-group">
                                             <label for="productdimension"><b>Product Dimension</b></label>
                                             <input type="text" class="form-control" id="productdimension" placeholder="Enter product dimension..." value="<?php echo $prod_dimension; ?>" name="productDimensionEdit" style="border-radius: 25px 25px;" />
-                                            <input type="hidden" value="$prod_id" name="productIDEdit" style="border-radius: 25px 25px;" />
+                                            <input type="hidden" value="<?php echo $prod_id; ?>" name="productIDEdit" style="border-radius: 25px 25px;" />
                                             <p class="help-block text-danger"></p>
                                         </div>
                                         <div class="control-group">
                                             <label for="productsize"><b>Product Size</b></label>
                                             <input type="text" class="form-control" id="productsize" placeholder="Enter product size..." value="<?php echo $product_size; ?>" name="productSizeEdit" style="border-radius: 25px 25px;" />
-                                            <input type="hidden" value="$prod_id" name="productIDEdit" style="border-radius: 25px 25px;" />
+                                            <input type="hidden" value="<?php echo $prod_id; ?>" name="productIDEdit" style="border-radius: 25px 25px;" />
                                             <p class="help-block text-danger"></p>
                                         </div>
                                         <div class="control-group">
                                             <label for="shippingweight"><b>Shipping Weight</b></label>
                                             <input type="text" class="form-control" id="shippingweight" placeholder="Enter product shipping weight..." value="<?php echo $shipping_weight; ?>" name="shippingWeightEdit" style="border-radius: 25px 25px;" />
-                                            <input type="hidden" value="$prod_id" name="productIDEdit" style="border-radius: 25px 25px;" />
+                                            <input type="hidden" value="<?php echo $prod_id; ?>" name="productIDEdit" style="border-radius: 25px 25px;" />
                                             <p class="help-block text-danger"></p>
                                         </div>
                                         <div class="control-group">
                                             <label for="manufacturername"><b>Manufacturer Name</b></label>
                                             <span class="text-danger">*</span>
                                             <input type="text" class="form-control" id="manufacturername" placeholder="Enter manufacturer name..." required value="<?php echo $manuf_name; ?>" name="manufNameEdit" style="border-radius: 25px 25px;" />
-                                            <input type="hidden" value="$prod_id" name="productIDEdit" style="border-radius: 25px 25px;" />
+                                            <input type="hidden" value="<?php echo $prod_id; ?>" name="productIDEdit" style="border-radius: 25px 25px;" />
                                             <p class="help-block text-danger"></p>
                                         </div>
                                         <div class="control-group">
                                             <label for="prodserialnum"><b>Product Serial Number</b></label>
                                             <span class="text-danger">*</span>
                                             <input type="text" class="form-control" id="prodserialnum" placeholder="Enter product serial number..." required value="<?php echo $prod_serial_num; ?>" name="prodSerialNumEdit" style="border-radius: 25px 25px;" />
-                                            <input type="hidden" value="$prod_id" name="productIDEdit" style="border-radius: 25px 25px;" />
+                                            <input type="hidden" value="<?php echo $prod_id; ?>" name="productIDEdit" style="border-radius: 25px 25px;" />
                                             <p class="help-block text-danger"></p>
                                         </div>
                                         <div class="control-group">
                                             <label for="productstock"><b>Product Stock</b></label>
                                             <span class="text-danger">*</span>
                                             <input type="text" class="form-control" id="productstock" placeholder="Enter product stock..." required value="<?php echo $stock; ?>" name="productStockEdit" style="border-radius: 25px 25px;" />
-                                            <input type="hidden" value="$prod_id" name="productIDEdit" style="border-radius: 25px 25px;" />
+                                            <input type="hidden" value="<?php echo $prod_id; ?>" name="productIDEdit" style="border-radius: 25px 25px;" />
                                             <p class="help-block text-danger"></p>
                                         </div>
                                         <div class="control-group">
@@ -301,7 +302,7 @@
                                                 <!-- <img src="img/addimage.png" alt="Avatar" width="200" height="200"> -->
                                             </div>
                                             <input type="file" id="fileImg" name="productImageEdit" placeholder="Select Image..." onchange="output.src=window.URL.createObjectURL(this.files[0])" />
-                                            <input type="hidden" value="$prod_id" name="productIDEdit" />
+                                            <input type="hidden" value="<?php echo $prod_id; ?>" name="productIDEdit" />
                                             <p class="help-block text-danger"></p>
                                         </div>
 

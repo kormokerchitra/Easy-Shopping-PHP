@@ -39,10 +39,50 @@
                                     $date_time = $notification_list[$i]['datetime'];
                                     $seen = $notification_list[$i]['seen'];
 
-                                    //$today = date("Y-m-d H:i:s");
-                                    //$today_time = strtotime($today);
-                                    //$expire_time = strtotime($date_time);
-                                    //$dif = abs($today_time - $expire_time);
+                                    $now = new DateTime();
+                                    $day= $now->format('Y-m-d H:i:s');
+
+                                    $date1 = new DateTime(date('Y-m-d', strtotime($day)));
+                                    $date2 = new DateTime(date('Y-m-d', strtotime($date_time)));
+                                    $diff =  $date1->diff($date2)->days;
+
+                                    $dt = "Today";
+
+                                    if($diff=="0"){
+                                        $dt = "Today";
+                                    }else if($diff=="1"){
+                                        $dt = "Yesterday";
+                                    }else{
+                                        //$dt = $diff." days ago";
+
+                                        if($diff>"1" && $diff<"30"){
+                                            $dt = $diff." days ago";
+                                        }else if($diff>="30" && $diff<"60"){
+                                            $dt = "1 month ago";
+                                        }else if($diff>="60" && $diff<"90"){
+                                            $dt = "2 months ago";
+                                        }else if($diff>="90" && $diff<"120"){
+                                            $dt = "3 months ago";
+                                        }else if($diff>="120" && $diff<"150"){
+                                            $dt = "4 months ago";
+                                        }else if($diff>="150" && $diff<"180"){
+                                            $dt = "5 months ago";
+                                        }else if($diff>="180" && $diff<"210"){
+                                            $dt = "6 months ago";
+                                        }else if($diff>="210" && $diff<"240"){
+                                            $dt = "7 months ago";
+                                        }else if($diff>="240" && $diff<"270"){
+                                            $dt = "8 months ago";
+                                        }else if($diff>="270" && $diff<"300"){
+                                            $dt = "9 months ago";
+                                        }else if($diff>="300" && $diff<"330"){
+                                            $dt = "10 months ago";
+                                        }else if($diff>="330" && $diff<"366"){
+                                            $dt = "11 months ago";
+                                        }else{
+                                            $dt = "1 year ago";
+                                        }
+                                    }
 
                                     if($seen == "0"){
                                         $notification_id = $notification_list[$i]['notification_id'];
@@ -71,14 +111,24 @@
 
                                         }
                                     }
+
+                                    echo "<a href='orderlist.php?inv_id=$inv_id' style='text-decoration: none;'><div class='row'>
+                                        <br/>
+                                        <h6 class='font-weight-bold mb-2'><img src='img/logo.jpg' width='20'></img>&nbsp;&nbsp;&nbsp;&nbsp;Order status changed to New for invoice id #$inv_id</h6>                                            
+                                        <br/>
+                                        </div>
+                                        <div class='row'><h7>$dt</h7></div>
+                                        <hr></a>";
                                     
-                                echo "<div class='row'>
-                                        <br/>
-                                        <h6 class='font-weight-bold mb-2'><img src='img/logo.jpg' width='20'></img>&nbsp;&nbsp;Order status changed to New for invoice id <a href='#'>#$inv_id</a></h6>
-                                        <br/>
-                                    </div>
-                                    <div class='row'><h7>$date_time</h7></div>
-                                    <hr>";
+                                    // <h6 class='font-weight-bold mb-2'><img src='img/logo.jpg' width='20'></img>&nbsp;&nbsp;Order status changed to New for invoice id <a href='#' class='btn btn-sm font-weight-bold text-dark'>#$inv_id</a></h6>
+
+                                    // echo "<div class='row'>
+                                    //         <br/>
+                                    //         <h6 class='font-weight-bold mb-2'><img src='img/logo.jpg' width='20'></img>&nbsp;&nbsp;&nbsp;&nbsp;<a href='#' class='btn btn-sm font-weight-bold text-dark'>Order status changed to New for invoice id #$inv_id</a></h6>                                            
+                                    //         <br/>
+                                    //     </div>
+                                    //     <div class='row'><h7>$date_time</h7></div>
+                                    //     <hr>";
                                 }
                             ?>
                             

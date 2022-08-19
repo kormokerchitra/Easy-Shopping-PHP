@@ -148,7 +148,7 @@
                                                     // User List Show //
                                                     echo "<tr>
                                                         <td class='align-middle'>$sum.</td>
-                                                        <td class='align-middle'><img src=$img alt='' style='width: 50px;'><br/>$name</td>
+                                                        <td class='align-middle'><img src=$img alt='' style='width: 50px; height: 50px; border-radius: 25px 25px;'><br/>$name</td>
                                                         <td class='align-middle'>$address</td>
                                                         <td class='align-middle'>$email</td>
                                                         <td class='align-middle'>$phone_num</td>

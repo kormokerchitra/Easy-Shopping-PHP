@@ -53,45 +53,45 @@
         $count = count($product_list);
     }
 
-    if($isSuccess == "true"){
-        $url_category = $base_url."easy_shopping/category_list.php";
-        $json_category = file_get_contents($url_category);
-        $json_data_category = json_decode($json_category, true);
+    // if($isSuccess == "true"){
+    //     $url_category = $base_url."easy_shopping/category_list.php";
+    //     $json_category = file_get_contents($url_category);
+    //     $json_data_category = json_decode($json_category, true);
 
-        $prodId = $_POST['prodid'];
+    //     $prodId = $_POST['prodid'];
 
-        $cat_list = $json_data_category["cat_list"];
-        $count = count($cat_list);
-        for ($i=0; $i < $count; $i++) { 
-            $categoryId = $cat_list[$i]["cat_id"];
-            if($categoryId==$cat_id){
-                $cat_count = $cat_list[$i]["product_count"];
-                $cat_count--;
-            }
-        }
+    //     $cat_list = $json_data_category["cat_list"];
+    //     $cat_count = count($cat_list);
+    //     for ($i=0; $i < $cat_count; $i++) { 
+    //         $categoryId = $cat_list[$i]["cat_id"];
+    //         if($categoryId==$cat_id){
+    //             $cat_count = $cat_list[$i]["product_count"];
+    //             $cat_count--;
+    //         }
+    //     }
 
-        $itemCount = $cat_count;
-        $totalProductInt -= $itemCount;
+    //     $itemCount = $cat_count;
+    //     $totalProductInt -= $itemCount;
 
-        $url3 = $base_url."easy_shopping/category_product_count.php";
-        $postdata = http_build_query(
-            array(
-                'cat_id' => $categoryId,
-                'product_count' => $totalProductInt,
-            )
-        );
+    //     $url3 = $base_url."easy_shopping/category_product_count.php";
+    //     $postdata = http_build_query(
+    //         array(
+    //             'cat_id' => $categoryId,
+    //             'product_count' => $totalProductInt,
+    //         )
+    //     );
 
-        $opts = array('http' =>
-            array(
-                'method' => 'POST',
-                'header' => 'Content-type: application/x-www-form-urlencoded',
-                'content' => $postdata
-            )
-        );
-        $context = stream_context_create($opts);
+    //     $opts = array('http' =>
+    //         array(
+    //             'method' => 'POST',
+    //             'header' => 'Content-type: application/x-www-form-urlencoded',
+    //             'content' => $postdata
+    //         )
+    //     );
+    //     $context = stream_context_create($opts);
 
-        $response = file_get_contents($url3, false, $context);
-    }
+    //     $response = file_get_contents($url3, false, $context);
+    // }
 
     include "header.php";
 
@@ -240,7 +240,6 @@
                                                             <a href='#'><button class='btn btn-sm btn-primary' type='submit' id='deleteprod' onclick=document.getElementById('$modal1Id').style.display='block' style='border-radius: 25px 25px;'><i class='fa fa-trash'></i></button></a>
                                                         </td>
                                                     </tr>";
-
 
                                                     // Product Delete Modal //
                                                     echo "<div id='$modal1Id' class='modal'>

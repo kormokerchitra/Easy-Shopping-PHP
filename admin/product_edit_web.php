@@ -6,11 +6,10 @@ $file_url = ""; $status = ""; $productImage="";
 
     $product_name = $_POST["product_name"];
     $cat_id = $_POST["cat_id"];
+    $prod_id = $_POST["prod_id"];
     $product_img = $_POST["product_img"];
     $product_code = $_POST["product_code"];
     $product_price = $_POST["product_price"];
-    $prod_discount = $_POST["prod_discount"];
-    $prod_disc_date = $_POST["prod_disc_date"];
     $prod_color = $_POST["prod_color"];
     $prod_description = $_POST["prod_description"];
     $prod_dimension = $_POST["prod_dimension"];
@@ -20,7 +19,7 @@ $file_url = ""; $status = ""; $productImage="";
     $prod_serial_num = $_POST["prod_serial_num"];
     $stock = $_POST["stock"];
 
-    $result = mysqli_query($con,"insert into product_list(prod_id, product_name, cat_id, product_img, product_code, product_price, prod_rating, prod_discount, prod_disc_date, prod_color, prod_description, prod_dimension, product_size, shipping_weight, manuf_name, prod_serial_num, stock) values(null,'{$product_name}', '{$cat_id}', '{$product_img}', '{$product_code}', '{$product_price}', '0', '{$prod_discount}', '{$prod_disc_date}', '{$prod_color}', '{$prod_description}', '{$prod_dimension}', '{$product_size}', '{$shipping_weight}', '{$manuf_name}', '{$prod_serial_num}', '{$stock}')");
+    $result = mysqli_query($con,"update product_list set product_name  = '$product_name', product_img = '$product_img', product_code = '$product_code', product_price = '$product_price', prod_color = '$prod_color', prod_description = '$prod_description', prod_dimension = '$prod_dimension', product_size = '$product_size', shipping_weight = '$shipping_weight', manuf_name = '$manuf_name', prod_serial_num = '$prod_serial_num', stock = '$stock' where prod_id = '$prod_id'");
  
     //if we got some result 
     if(isset($result)){

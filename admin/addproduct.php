@@ -58,7 +58,6 @@
             // if(in_array($file_ext,$extensions)===false){
             //    $errors[]="extension not allowed, please choose a JPEG or PNG file.";
             // }
-          
             // if($file_size > 2097152) {
             //    $errors[]='File size must be excately 2 MB';
             // }
@@ -92,9 +91,7 @@
         //     }
         // }
 
-        
-
-        $url2 = $base_url."easy_shopping/product_add_web.php";
+        $url2 = $base_url."easy_shopping/admin/product_add_web.php";
         $postdata = http_build_query(
             array(
                 'cat_id' => $categoryId,
@@ -239,7 +236,6 @@
                                             <span class="text-danger">*</span><Br/>
                                             <select class="form-control" name="catId" id="catid" style="border-radius: 25px 25px;">
                                                 <?php
-
                                                     for ($i=0; $i < $total_count; $i++) { 
                                                         $cat_id = $cat_list[$i]["cat_id"];
                                                         $name = $cat_list[$i]["cat_name"];

@@ -94,7 +94,7 @@
     //     );
     //     $context = stream_context_create($opts);
 
-    //     $response2 = file_get_contents($url3, false, $context);
+    //     $response3 = file_get_contents($url3, false, $context);
 
     //     if($response!="failure"){
     //         header("Location: profile.php");
