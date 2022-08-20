@@ -5,6 +5,8 @@ $con=mysqli_connect('localhost','root','','easy_shopping');
 $prod_id = $_POST['prod_id'];
 $cat_id = $_POST['cat_id'];
 
+$counter = 0;
+
 $del_ok = mysqli_query($con, "delete from product_list where prod_id = '$prod_id'");
 
 if($del_ok){

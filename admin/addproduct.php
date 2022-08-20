@@ -9,6 +9,7 @@
     $itemCount=0;
     $totalProductInt=0;
     $cat_count=0;
+    $total_category=0;
     $isAddSuccess="false";
 
     $base_url="http://localhost/";
@@ -17,14 +18,13 @@
     $json_data = json_decode($json, true);
 
     $cat_list = $json_data["cat_list"];
-    $total_count = count($cat_list);
+    $total_category = count($cat_list);
 
-    $base_url="http://localhost/";
-    $url = $base_url."easy_shopping/product_list.php";
-    $json = file_get_contents($url);
-    $json_data = json_decode($json, true);
+    $url1 = $base_url."easy_shopping/product_list.php";
+    $json1 = file_get_contents($url1);
+    $json_data1 = json_decode($json1, true);
 
-    $product_list = $json_data["product_list"];
+    $product_list = $json_data1["product_list"];
     $count = count($product_list);
 
     $date = time();
@@ -91,6 +91,8 @@
         //     }
         // }
 
+        $now = new DateTime();
+        $day= $now->format('Y-m-d');
         $url2 = $base_url."easy_shopping/admin/product_add_web.php";
         $postdata = http_build_query(
             array(
@@ -101,6 +103,7 @@
                 'prod_discount' => $productDiscount,
                 'prod_color' => $productColor,
                 'prod_description' => $productDescription,
+                'prod_disc_date' => $day,
                 'prod_dimension' => $productDimension,
                 'product_size' => $productSize,
                 'shipping_weight' => $shippingWeight,
@@ -121,13 +124,16 @@
         $context = stream_context_create($opts);
 
         $response = file_get_contents($url2, false, $context);
-        $isAddSuccess = "true";
+        if($response == "Success"){
+            $isAddSuccess = "true";
+        }
+        
         // header("Location: products.php");
-        $json = file_get_contents($url);
-        $json_data = json_decode($json, true);
+        // $json = file_get_contents($url);
+        // $json_data = json_decode($json, true);
 
-        $product_list = $json_data["product_list"];
-        $count = count($product_list);
+        // $product_list = $json_data["product_list"];
+        // $count = count($product_list);
     }
 
     if($isAddSuccess == "true"){
@@ -236,7 +242,8 @@
                                             <span class="text-danger">*</span><Br/>
                                             <select class="form-control" name="catId" id="catid" style="border-radius: 25px 25px;">
                                                 <?php
-                                                    for ($i=0; $i < $total_count; $i++) { 
+
+                                                    for ($i=0; $i < $total_category; $i++) { 
                                                         $cat_id = $cat_list[$i]["cat_id"];
                                                         $name = $cat_list[$i]["cat_name"];
                                                         echo "<option value='$cat_id'>$name</option>";

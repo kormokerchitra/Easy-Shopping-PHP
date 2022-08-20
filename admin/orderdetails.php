@@ -4,12 +4,18 @@
     $json_data = json_decode($jsonBody, true);
     $phone = $json_data["phon_number"];
     $phone_size = strlen($phone);
+
+    session_start();
+
+    $login_user = $_SESSION['user_id'];
     
     if($phone[1] == "8"){
         $phone = "+".$phone;
     }
     
     $order_id = $json_data["order_id"];
+    $inv_id = $json_data["inv_id"];
+    $receiver = $json_data["user_id"];
 
     $base_url="http://localhost/";
     $url = $base_url."easy_shopping/order_product_by_id.php";
@@ -59,6 +65,27 @@
         $response = file_get_contents($url1, false, $context1);
 
         $json_data["status"] = $dropdownId;
+
+        $url3 = $base_url."easy_shopping/notification_update.php";
+
+        $postdata3 = http_build_query(
+            array(
+                'inv_id' => $inv_id,
+                'status' => $dropdownId,
+                'receiver' => $receiver,
+                'sender' => $login_user
+            )
+        );
+
+        $opts3 = array('http' =>
+            array(
+                'method' => 'POST',
+                'header' => 'Content-type: application/x-www-form-urlencoded',
+                'content' => $postdata3
+            )
+        );
+        $context3 = stream_context_create($opts3);
+        $response = file_get_contents($url3, false, $context3);
 
     }
 

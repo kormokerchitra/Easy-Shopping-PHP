@@ -3,7 +3,7 @@
     $file_url = ""; $status = ""; $productImageEdit=""; $url2="";
     $upload_path = 'img/';
  
-    // //creating the upload url
+    // creating the upload url
     $upload_url = 'easy_shopping/admin/'.$upload_path;
 
     $prod_id = "";
@@ -39,7 +39,7 @@
     $json_data = json_decode($json, true);
 
     $cat_list = $json_data["cat_list"];
-    $total_count = count($cat_list);
+    $total_category = count($cat_list);
 
     $url = $base_url."easy_shopping/product_list.php";
     $json = file_get_contents($url);
@@ -195,7 +195,7 @@
                                             <span class="text-danger">*</span><Br/>
                                             <select class="form-control" name="cat" id="cat" style="border-radius: 25px 25px;">
                                                 <?php
-                                                    for ($i=0; $i < $total_count; $i++) { 
+                                                    for ($i=0; $i < $total_category; $i++) { 
                                                         $cat_id = $cat_list[$i]["cat_id"];
                                                         $name = $cat_list[$i]["cat_name"];
                                                         if($name == $cat_name){

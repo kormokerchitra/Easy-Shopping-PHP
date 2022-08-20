@@ -24,6 +24,8 @@
     $json_data = json_decode($jsonBody, true);
     $jsonEncode = json_encode($json_data);
 
+    $prod_id = $json_data["prod_id"];
+
     $prod_img = $json_data["product_img"];
     if($json_data["product_img"] == ""){
         $prod_img = 'img/product_back.jpg';
@@ -57,6 +59,8 @@
         // header("Location: categorylist.php");
         $jsonBody = $_GET['jsonBody'];
         $json_data = json_decode($jsonBody, true);
+
+        header("Location: products.php?cat_id=&cat_name=");
     }
 
     include "header.php";
@@ -184,9 +188,8 @@
                                         $product_color = $json_data["prod_color"];
                                         $prod_dimension = $json_data["prod_dimension"];
                                         $shipping_weight = $json_data["shipping_weight"];
-                                        //$prod_id = $json_data[$i]["prod_id"];
 
-                                        $modalEditId = "myModalEdit".$prod_id;
+                                        $modalEditId = "myModalEdit";
 
                                         // Discount Edit Modal //
                                         echo "<div id='$modalEditId' class='modal'>

@@ -25,10 +25,12 @@
 
     if(isset($_POST['yesButton'])) {
         $prodId = $_POST['prodid'];
+        $catID = $_POST['catID'];
         $url1 = $base_url."easy_shopping/product_delete.php";
         $postdata = http_build_query(
             array(
                 'prod_id' => $prodId,
+                'cat_id' => $catID
             )
         );
 
@@ -258,8 +260,8 @@
                                                                                 <div id='success'></div>
                                                                                 <form name='sentMessage' id='contactForm' method='POST'>
                                                                                     <div class='control-group'>
-                                                                                        <p class='text-center'>Do you want to delete $product_name?</p>
-                                                                                        <input type='hidden' class='form-control' placeholder='' name = 'prodid' value='$prod_id' />
+                                                                                        <p class='text-center'>Do you want to delete $product_name? $prod_id</p>
+                                                                                        <input type='text' class='form-control' placeholder='' name = 'prodid' value='$prod_id' />
                                                                                         <div class='row justify-content-center'>
                                                                                             <button class='btn btn-primary py-2 px-4 bg-red' type='submit' id='noButton' name='noButton' style='border-radius: 25px 25px;'>No</button>&nbsp;&nbsp;&nbsp;
                                                                                             <button class='btn btn-primary py-2 px-4 bg-green' type='submit' id='yesButton' name='yesButton' style='border-radius: 25px 25px;'>Yes</button>
@@ -319,6 +321,7 @@
                                                                                     <div class='control-group'>
                                                                                         <p class='text-center'>Do you want to delete $product_name?</p>
                                                                                         <input type='hidden' class='form-control' placeholder='' name = 'prodid' value='$prod_id' />
+                                                                                        <input type='hidden' class='form-control' placeholder='' name = 'catID' value='$catID' />
                                                                                         <div class='row justify-content-center'>
                                                                                             <button class='btn btn-primary py-2 px-4 bg-red' type='submit' id='noButton' name='noButton' style='border-radius: 25px 25px;'>No</button>&nbsp;&nbsp;&nbsp;
                                                                                             <button class='btn btn-primary py-2 px-4 bg-green' type='submit' id='yesButton' name='yesButton' style='border-radius: 25px 25px;'>Yes</button>

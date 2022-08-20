@@ -26,7 +26,7 @@ $con=mysqli_connect('localhost','root','','easy_shopping');
 		"voucher_name"=>$row['voucher_name'],
 		"voucher_amount"=>$row['voucher_amount'],
 		"vou_exp_date"=>$row['vou_exp_date'],
-		//"voucher_exp_amount"=>$row['voucher_exp_amount'],
+		"voucher_exp_amount"=>$row['voucher_exp_amount'],
 		"voucher_status"=>$row['voucher_status']
 	));
  }

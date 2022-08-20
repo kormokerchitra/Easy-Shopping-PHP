@@ -77,10 +77,12 @@
                                             $dt = "9 months ago";
                                         }else if($diff>="300" && $diff<"330"){
                                             $dt = "10 months ago";
-                                        }else if($diff>="330" && $diff<"366"){
+                                        }else if($diff>="330" && $diff<"365"){
                                             $dt = "11 months ago";
-                                        }else{
+                                        }else if($diff>="365" && $diff<"730"){
                                             $dt = "1 year ago";
+                                        }else{
+                                            $dt = "2 years ago";
                                         }
                                     }
 
